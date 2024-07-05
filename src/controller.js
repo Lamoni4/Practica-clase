@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import fs from 'fs'
 import { pool } from './db.js'
 
@@ -28,6 +29,7 @@ export const exportarEmpleados = async (request, response) => {
   try {
     const [rows] = await pool.execute('SELECT * FROM usuarios')
 
+    // Guardar los datos en un archivo TXT
     const data = rows.map(row => JSON.stringify(row)).join('\n')
     fs.writeFile('empleados.txt', data, err => {
       if (err) {
@@ -52,7 +54,6 @@ export const importarEmpleados = async (request, response) => {
     const empleados = data.split('\n').map(line => JSON.parse(line))
 
     const insertPromises = empleados.map(empleado => {
-      // eslint-disable-next-line camelcase
       const { id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono } = empleado
       return pool.execute(
         `INSERT INTO usuarios (id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono) 
@@ -65,7 +66,6 @@ export const importarEmpleados = async (request, response) => {
           edad = VALUES(edad), 
           fecha_creacion = VALUES(fecha_creacion), 
           telefono = VALUES(telefono)`,
-        // eslint-disable-next-line camelcase
         [id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono]
       )
     })

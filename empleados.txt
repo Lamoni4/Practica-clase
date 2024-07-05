@@ -2,4 +2,3 @@
 {"id":2,"nombres":"Cielo ","apellidos":"Arce","direccion":"Av.colomi","correo":"cielo@gmail.com","dni":"123456789","edad":24,"fecha_creacion":"2024-06-05T04:00:00.000Z","telefono":"72208462"}
 {"id":3,"nombres":"Carlos","apellidos":"Salazar","direccion":"Av.Federacion","correo":"carlos@gmail.com","dni":"987654321","edad":30,"fecha_creacion":"2024-06-04T04:00:00.000Z","telefono":"21217212"}
 {"id":4,"nombres":"pedro","apellidos":"picapiedra","direccion":"las brisas","correo":"pedro@gmail.com","dni":"76485116332","edad":32,"fecha_creacion":"1974-02-05T04:00:00.000Z","telefono":"70750587"}
-{"id":5,"nombres":"german","apellidos":"rico","direccion":"en la esquina","correo":"german@gmail.com","dni":"14102151321","edad":52,"fecha_creacion":"1975-03-05T04:00:00.000Z","telefono":"12334654"}

@@ -9,7 +9,7 @@ const requestHandler = (request, response) => {
     bienvenida(request, response)
   } else if (request.method === 'GET' && request.url === '/empleados') {
     mostrarEmpleados(request, response)
-  } else if (request.method === 'GET' && request.url === '/export') {
+  } else if (request.method === 'POST' && request.url === '/export') {
     exportarEmpleados(request, response)
   } else if (request.method === 'POST' && request.url === '/import') {
     importarEmpleados(request, response)
