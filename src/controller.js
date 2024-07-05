@@ -45,3 +45,37 @@ export const exportarEmpleados = async (request, response) => {
     response.end(JSON.stringify({ error: 'No se pudieron exportar los empleados' }))
   }
 }
+
+export const importarEmpleados = async (request, response) => {
+  try {
+    const data = fs.readFileSync('empleados.txt', 'utf8')
+    const empleados = data.split('\n').map(line => JSON.parse(line))
+
+    const insertPromises = empleados.map(empleado => {
+      // eslint-disable-next-line camelcase
+      const { id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono } = empleado
+      return pool.execute(
+        `INSERT INTO usuarios (id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
+        ON DUPLICATE KEY UPDATE 
+          nombre = VALUES(nombre), 
+          apellido = VALUES(apellido), 
+          correo = VALUES(correo), 
+          dni = VALUES(dni), 
+          edad = VALUES(edad), 
+          fecha_creacion = VALUES(fecha_creacion), 
+          telefono = VALUES(telefono)`,
+        // eslint-disable-next-line camelcase
+        [id, nombre, apellido, correo, dni, edad, fecha_creacion, telefono]
+      )
+    })
+
+    await Promise.all(insertPromises)
+
+    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
+    response.end('Datos de empleados importados correctamente')
+  } catch (error) {
+    response.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' })
+    response.end(JSON.stringify({ error: 'No se pudieron importar los empleados' }))
+  }
+}
